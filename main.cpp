@@ -24,16 +24,14 @@ void convert(const std::string& path)
 
     int requestPerHour{};
     int hours;
-
+    std::string name{};
+    std::string word{};
     // Считываем файл построчно
     while(std::getline(file, str))
     {
         std::stringstream stream(str);
-        std::string name;
-
         stream >> name;
 
-        std::string word{};
         stream >> word;
         requestPerHour = std::stoi(word);
 

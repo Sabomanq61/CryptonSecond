@@ -25,6 +25,7 @@ void convert(const std::string& path)
     int requestPerHour{};
     int hours;
 
+    // Считываем файл построчно
     while(std::getline(file, str))
     {
         std::stringstream stream(str);
@@ -33,33 +34,31 @@ void convert(const std::string& path)
         stream >> name;
 
         std::string word{};
-
         stream >> word;
         requestPerHour = std::stoi(word);
 
         stream >> word;
         hours = std::stoi(word);
 
-        // Проверяем наличие информации о пользователе
         stream >> word;
-        if(personsMap.find(name) != personsMap.end())
-        {
-            personsMap[name].additional = word;
-        }
-        
+
+        personsMap[name].additional =  word;
+
         personsMap[name].requestPerHour += requestPerHour;
 
         personsMap[name].totalRequest += requestPerHour * hours;
 
         personsMap[name].totalHours += hours;
     }
+
     file.close();
 
-    std::ofstream outputFile("persons_convert.txt");
+    std::ofstream outputFile("result_" + path);
 
     for(const auto& it : personsMap)
     {
-        outputFile << it.first << " " << it.second.requestPerHour << " " << it.second.totalHours  << " " << it.second.totalRequest << std::endl;
+        outputFile << it.first << " " << it.second.requestPerHour << " "
+                << it.second.totalHours  << " " << it.second.totalRequest << " " << it.second.additional << std::endl;
     }
 
     outputFile.close();
